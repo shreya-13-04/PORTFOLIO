@@ -98,3 +98,37 @@ function typeWriter() {
 if (targetElement) {
     typeWriter();
 }
+
+document.querySelectorAll("[data-track]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const type = btn.dataset.track;
+
+    // Ready for GA / Plausible / PostHog
+    console.log(`Document clicked: ${type}`);
+
+    // Example (future):
+    // window.plausible?.("Document Click", { props: { type } });
+  });
+});
+
+//For education - scrollable 
+const revealElements = document.querySelectorAll(
+  '.reveal-left, .reveal-right'
+);
+
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+      } else {
+        entry.target.classList.remove('reveal-active'); // 👈 resets
+      }
+    });
+  },
+  {
+    threshold: 0.3
+  }
+);
+
+revealElements.forEach(el => observer.observe(el));
